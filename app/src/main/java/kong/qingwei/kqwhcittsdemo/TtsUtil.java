@@ -70,4 +70,13 @@ public class TtsUtil {
             Toast.makeText(mActivity, "播放器内部状态错误", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * 释放
+     */
+    public void release() {
+        if (null != mTtsPlayer) {
+            mTtsPlayer.release();
+        }
+    }
 }

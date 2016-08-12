@@ -53,6 +53,13 @@ public class HciUtil {
     }
 
     /**
+     * 释放
+     */
+    public void hciRelease(){
+        HciCloudSys.hciRelease();
+    }
+
+    /**
      * 加载初始化信息
      *
      * @return 系统初始化参数
