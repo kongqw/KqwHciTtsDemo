@@ -99,17 +99,19 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
     }
 
 
-    // 语音合成的回调
+    // 语音合成状态的回调
     @Override
     public void onPlayerEventStateChange(TTSCommonPlayer.PlayerEvent playerEvent) {
         Log.i(TAG, "onStateChange " + playerEvent.name());
     }
 
+    // 合成进度回调
     @Override
     public void onPlayerEventProgressChange(TTSCommonPlayer.PlayerEvent playerEvent, int start, int end) {
         Log.i(TAG, "onProcessChange " + playerEvent.name() + " from " + start + " to " + end);
     }
 
+    // 错误回调
     @Override
     public void onPlayerEventPlayerError(TTSCommonPlayer.PlayerEvent playerEvent, int errorCode) {
         Log.i(TAG, "onError " + playerEvent.name() + " code: " + errorCode);
