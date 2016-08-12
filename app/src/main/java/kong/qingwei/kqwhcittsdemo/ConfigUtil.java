@@ -24,6 +24,7 @@ public final class ConfigUtil {
     /**
      * 需要运行的灵云能力
      */
-     public static final String CAP_KEY = "tts.local.synth";
-//    public static final String CAP_KEY = "tts.cloud.wangjing";
+    public static final String CAP_KEY = "tts.local.synth";
+    //    public static final String CAP_KEY = "tts.cloud.wangjing";
+    public static final String CAP_KEY_NUL = "nlu.cloud";
 }

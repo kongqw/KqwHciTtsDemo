@@ -12,16 +12,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sinovoice.hcicloudsdk.api.HciCloudSys;
+import com.sinovoice.hcicloudsdk.common.nlu.NluRecogResult;
+import com.sinovoice.hcicloudsdk.common.nlu.NluRecogResultItem;
 import com.sinovoice.hcicloudsdk.player.TTSCommonPlayer;
 import com.sinovoice.hcicloudsdk.player.TTSPlayerListener;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TTSPlayerListener {
 
     private static final String TAG = "MainActivity";
     private EditText mEditText;
+    private EditText mEditText2;
     private boolean isInitPlayer;
     private TtsUtil mTtsUtil;
     private HciUtil mInitTts;
+    private NluUtil mNluUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
 //        });
 
         mEditText = (EditText) findViewById(R.id.edit_text);
+        mEditText2 = (EditText) findViewById(R.id.edit_text2);
 
         // 灵云语音工具类
         mInitTts = new HciUtil(this);
@@ -52,6 +59,15 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
             isInitPlayer = mTtsUtil.initPlayer(this);
         }
 
+
+        // 语义理解
+        mNluUtil = new NluUtil(this);
+        boolean isInitNul = mNluUtil.initNul();
+        if (isInitNul) {
+            Toast.makeText(this, "语义理解 初始化成功", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "语义理解 初始化失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -96,6 +112,35 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
             return;
         }
         mTtsUtil.synth(text);
+    }
+
+    /**
+     * 语义理解
+     *
+     * @param view
+     */
+    public void recog(View view) {
+        String text = mEditText2.getText().toString();
+        if (TextUtils.isEmpty(text)) {
+            Toast.makeText(this, "理解句子内容为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mNluUtil.recog(text, new NluUtil.OnNluRecogListener() {
+            @Override
+            public void onNluResult(NluRecogResult nluRecogResult) {
+                ArrayList<NluRecogResultItem> nluRecogResultItems = nluRecogResult.getRecogResultItemList();
+                for (NluRecogResultItem nluRecogResultItem : nluRecogResultItems) {
+                    String result = nluRecogResultItem.getResult();
+                    Log.i(TAG, "onNluResult: " + result);
+                }
+            }
+
+            @Override
+            public void onError(int errorCode) {
+                Log.i(TAG, "onError: errorCode = " + errorCode);
+            }
+        });
+
     }
 
 

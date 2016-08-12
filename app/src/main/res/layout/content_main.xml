@@ -25,4 +25,17 @@
         android:onClick="synth"
         android:text="开始合成" />
 
+    <EditText
+        android:id="@+id/edit_text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入要识别的句子"
+        android:text="今天天气怎么样" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="recog"
+        android:text="文字语义理解(同步)" />
+
 </LinearLayout>
