@@ -1,6 +1,5 @@
 package kong.qingwei.kqwhcidemo;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,16 +57,15 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
             mTtsUtil = new TtsUtil(this);
             // 初始化语音合成
             isInitPlayer = mTtsUtil.initPlayer(this);
-        }
 
-
-        // 语义理解
-        mNluUtil = new NluUtil(this);
-        boolean isInitNul = mNluUtil.initNul();
-        if (isInitNul) {
-            Toast.makeText(this, "语义理解 初始化成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "语义理解 初始化失败", Toast.LENGTH_SHORT).show();
+            // 语义理解
+            mNluUtil = new NluUtil(this);
+            boolean isInitNul = mNluUtil.initNul();
+            if (isInitNul) {
+                Toast.makeText(this, "语义理解 初始化成功", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "语义理解 初始化失败", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -118,10 +116,10 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
     /**
      * 语义理解
      *
-     * @param view
+     * @param view view
      */
     public void recog(View view) {
-        String text = mEditText2.getText().toString();
+        final String text = mEditText2.getText().toString();
         if (TextUtils.isEmpty(text)) {
             Toast.makeText(this, "理解句子内容为空", Toast.LENGTH_SHORT).show();
             return;
@@ -129,12 +127,14 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
         mNluUtil.recog(text, new NluUtil.OnNluRecogListener() {
             @Override
             public void onNluResult(NluRecogResult nluRecogResult) {
+                StringBuilder stringBuffer = new StringBuilder();
                 ArrayList<NluRecogResultItem> nluRecogResultItems = nluRecogResult.getRecogResultItemList();
                 for (NluRecogResultItem nluRecogResultItem : nluRecogResultItems) {
                     String result = nluRecogResultItem.getResult();
+                    stringBuffer.append(result).append("\n");
                     Log.i(TAG, "onNluResult: " + result);
-                    showDialog(result);
                 }
+                showDialog(text, stringBuffer.toString());
             }
 
             @Override
@@ -165,10 +165,16 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
     }
 
 
-    private void showDialog(String text) {
+    /**
+     * 显示Dialog
+     *
+     * @param title   title
+     * @param message message
+     */
+    private void showDialog(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("返回结果");
-        builder.setMessage(text);
+        builder.setTitle(title);
+        builder.setMessage(message);
         builder.setPositiveButton("确认", null);
         builder.create().show();
     }
