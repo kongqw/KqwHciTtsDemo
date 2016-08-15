@@ -1,4 +1,4 @@
-package kong.qingwei.kqwhcittsdemo;
+package kong.qingwei.kqwhcidemo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,9 +1,8 @@
-package kong.qingwei.kqwhcittsdemo;
+package kong.qingwei.kqwhcidemo;
 
 import android.app.Activity;
 import android.util.Log;
 
-import com.sinovoice.hcicloudsdk.api.HciCloudSys;
 import com.sinovoice.hcicloudsdk.api.nlu.HciCloudNlu;
 import com.sinovoice.hcicloudsdk.common.HciErrorCode;
 import com.sinovoice.hcicloudsdk.common.Session;
@@ -33,7 +32,8 @@ public class NluUtil {
         initParam.addParam(NluInitParam.PARAM_KEY_FILE_FLAG, NluInitParam.VALUE_OF_PARAM_FILE_FLAG_ANDROID_SO);
         initParam.addParam(NluInitParam.PARAM_KEY_INIT_CAP_KEYS, ConfigUtil.CAP_KEY_NUL);
         int errCode = HciCloudNlu.hciNluInit(initParam.getStringConfig());
-        return errCode == HciErrorCode.HCI_ERR_NONE;
+        Log.i(TAG, "initNul: errCode = " + errCode);
+        return errCode == HciErrorCode.HCI_ERR_NONE || errCode == HciErrorCode.HCI_ERR_NLU_ALREADY_INIT;
     }
 
     public void recog(String text, OnNluRecogListener onNluRecogListener) {

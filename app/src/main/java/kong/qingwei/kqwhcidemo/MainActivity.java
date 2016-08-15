@@ -1,6 +1,8 @@
-package kong.qingwei.kqwhcittsdemo;
+package kong.qingwei.kqwhcidemo;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -11,7 +13,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.sinovoice.hcicloudsdk.api.HciCloudSys;
 import com.sinovoice.hcicloudsdk.common.nlu.NluRecogResult;
 import com.sinovoice.hcicloudsdk.common.nlu.NluRecogResultItem;
 import com.sinovoice.hcicloudsdk.player.TTSCommonPlayer;
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
                 for (NluRecogResultItem nluRecogResultItem : nluRecogResultItems) {
                     String result = nluRecogResultItem.getResult();
                     Log.i(TAG, "onNluResult: " + result);
+                    showDialog(result);
                 }
             }
 
@@ -160,5 +162,14 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
     @Override
     public void onPlayerEventPlayerError(TTSCommonPlayer.PlayerEvent playerEvent, int errorCode) {
         Log.i(TAG, "onError " + playerEvent.name() + " code: " + errorCode);
+    }
+
+
+    private void showDialog(String text) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("返回结果");
+        builder.setMessage(text);
+        builder.setPositiveButton("确认", null);
+        builder.create().show();
     }
 }

@@ -1,4 +1,4 @@
-package kong.qingwei.kqwhcittsdemo;
+package kong.qingwei.kqwhcidemo;
 
 /**
  * Created by kqw on 2016/8/12.
