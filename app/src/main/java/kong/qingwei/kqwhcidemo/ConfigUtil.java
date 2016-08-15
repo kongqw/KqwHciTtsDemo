@@ -32,6 +32,8 @@ public final class ConfigUtil {
     public static final String CAP_KEY_NUL_CLOUD = "nlu.cloud";
     // 云端自由说
     public static final String CAP_KEY_ASR_CLOUD_FREETALK = "asr.cloud.freetalk";
+    // 离线自由说
+    public static final String CAP_KEY_ASR_LOCAL_FREETALK = "asr.local.freetalk";
     // 云端语音识别+语义
     public static final String CAP_KEY_ASR_CLOUD_DIALOG = "asr.cloud.dialog";
 }

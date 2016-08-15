@@ -36,7 +36,7 @@ public class AsrUtil {
         // 配置初始化参数
         AsrInitParam asrInitParam = new AsrInitParam();
         String dataPath = mActivity.getFilesDir().getPath().replace("files", "lib");
-        asrInitParam.addParam(AsrInitParam.PARAM_KEY_INIT_CAP_KEYS, ConfigUtil.CAP_KEY_ASR_CLOUD_FREETALK);
+        asrInitParam.addParam(AsrInitParam.PARAM_KEY_INIT_CAP_KEYS, ConfigUtil.CAP_KEY_ASR_CLOUD_DIALOG);
         asrInitParam.addParam(AsrInitParam.PARAM_KEY_DATA_PATH, dataPath);
         asrInitParam.addParam(AsrInitParam.PARAM_KEY_FILE_FLAG, AsrInitParam.VALUE_OF_PARAM_FILE_FLAG_ANDROID_SO);
         Log.v(TAG, "init parameters:" + asrInitParam.getStringConfig());
@@ -47,7 +47,7 @@ public class AsrUtil {
         // 配置识别参数
         asrConfig = new AsrConfig();
         // PARAM_KEY_CAP_KEY 设置使用的能力
-        asrConfig.addParam(AsrConfig.SessionConfig.PARAM_KEY_CAP_KEY, ConfigUtil.CAP_KEY_ASR_CLOUD_FREETALK);
+        asrConfig.addParam(AsrConfig.SessionConfig.PARAM_KEY_CAP_KEY, ConfigUtil.CAP_KEY_ASR_CLOUD_DIALOG);
         // PARAM_KEY_AUDIO_FORMAT 音频格式根据不同的能力使用不用的音频格式
         asrConfig.addParam(AsrConfig.AudioConfig.PARAM_KEY_AUDIO_FORMAT, AsrConfig.AudioConfig.VALUE_OF_PARAM_AUDIO_FORMAT_PCM_16K16BIT);
         // PARAM_KEY_ENCODE 音频编码压缩格式，使用OPUS可以有效减小数据流量
