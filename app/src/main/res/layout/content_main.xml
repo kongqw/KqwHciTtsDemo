@@ -38,4 +38,10 @@
         android:onClick="recog"
         android:text="文字语义理解(同步)" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="asr"
+        android:text="语音识别" />
+
 </LinearLayout>

@@ -30,9 +30,9 @@ public class NluUtil {
         String dataPath = mActivity.getFilesDir().getAbsolutePath().replace("files", "lib");
         initParam.addParam(NluInitParam.PARAM_KEY_DATA_PATH, dataPath);
         initParam.addParam(NluInitParam.PARAM_KEY_FILE_FLAG, NluInitParam.VALUE_OF_PARAM_FILE_FLAG_ANDROID_SO);
-        initParam.addParam(NluInitParam.PARAM_KEY_INIT_CAP_KEYS, ConfigUtil.CAP_KEY_NUL);
+        initParam.addParam(NluInitParam.PARAM_KEY_INIT_CAP_KEYS, ConfigUtil.CAP_KEY_NUL_CLOUD);
         int errCode = HciCloudNlu.hciNluInit(initParam.getStringConfig());
-        Log.i(TAG, "initNul: errCode = " + errCode);
+        Log.i(TAG, "initAsr: errCode = " + errCode);
         return errCode == HciErrorCode.HCI_ERR_NONE || errCode == HciErrorCode.HCI_ERR_NLU_ALREADY_INIT;
     }
 
@@ -67,7 +67,7 @@ public class NluUtil {
 
     private NluConfig initConfig() {
         NluConfig nluConfig = new NluConfig();
-        nluConfig.addParam(NluConfig.SessionConfig.PARAM_KEY_CAP_KEY, ConfigUtil.CAP_KEY_NUL);
+        nluConfig.addParam(NluConfig.SessionConfig.PARAM_KEY_CAP_KEY, ConfigUtil.CAP_KEY_NUL_CLOUD);
         nluConfig.addParam("intention", "weather");
         return nluConfig;
     }

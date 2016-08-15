@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile files('libs/hcicloud-5.0.jar')
     compile files('libs/hcicloud_player-5.0.jar')
+    compile files('libs/hcicloud_recorder-5.0.jar')
 }

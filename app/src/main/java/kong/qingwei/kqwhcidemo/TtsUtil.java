@@ -35,7 +35,7 @@ public class TtsUtil {
         String dataPath = mActivity.getBaseContext().getFilesDir().getAbsolutePath().replace("files", "lib");
         ttsInitParam.addParam(TtsInitParam.PARAM_KEY_DATA_PATH, dataPath);
         // 此处演示初始化的能力为tts.cloud.xiaokun, 用户可以根据自己可用的能力进行设置, 另外,此处可以传入多个能力值,并用;隔开
-        ttsInitParam.addParam(AsrInitParam.PARAM_KEY_INIT_CAP_KEYS, ConfigUtil.CAP_KEY);
+        ttsInitParam.addParam(AsrInitParam.PARAM_KEY_INIT_CAP_KEYS, ConfigUtil.CAP_KEY_TTS_LOCAL);
         // 使用lib下的资源文件,需要添加android_so的标记
         ttsInitParam.addParam(HwrInitParam.PARAM_KEY_FILE_FLAG, "android_so");
 
@@ -54,7 +54,7 @@ public class TtsUtil {
         // 音频格式
         ttsConfig.addParam(TtsConfig.BasicConfig.PARAM_KEY_AUDIO_FORMAT, "pcm16k16bit");
         // 指定语音合成的能力(云端合成,发言人是XiaoKun)
-        ttsConfig.addParam(TtsConfig.SessionConfig.PARAM_KEY_CAP_KEY, ConfigUtil.CAP_KEY);
+        ttsConfig.addParam(TtsConfig.SessionConfig.PARAM_KEY_CAP_KEY, ConfigUtil.CAP_KEY_TTS_LOCAL);
         // 设置合成语速
         ttsConfig.addParam(TtsConfig.BasicConfig.PARAM_KEY_SPEED, "5");
         // property为私有云能力必选参数，公有云传此参数无效

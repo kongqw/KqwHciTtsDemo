@@ -1,8 +1,6 @@
 package kong.qingwei.kqwhcidemo;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.sinovoice.hcicloudsdk.common.asr.AsrRecogItem;
+import com.sinovoice.hcicloudsdk.common.asr.AsrRecogResult;
 import com.sinovoice.hcicloudsdk.common.nlu.NluRecogResult;
 import com.sinovoice.hcicloudsdk.common.nlu.NluRecogResultItem;
 import com.sinovoice.hcicloudsdk.player.TTSCommonPlayer;
@@ -19,7 +19,7 @@ import com.sinovoice.hcicloudsdk.player.TTSPlayerListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements TTSPlayerListener {
+public class MainActivity extends BaseActivity implements TTSPlayerListener {
 
     private static final String TAG = "MainActivity";
     private EditText mEditText;
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
     private TtsUtil mTtsUtil;
     private HciUtil mInitTts;
     private NluUtil mNluUtil;
+    private AsrUtil mAsrUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +36,6 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         mEditText = (EditText) findViewById(R.id.edit_text);
         mEditText2 = (EditText) findViewById(R.id.edit_text2);
@@ -66,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
             } else {
                 Toast.makeText(this, "语义理解 初始化失败", Toast.LENGTH_SHORT).show();
             }
+
+            // 语音识别
+            mAsrUtil = new AsrUtil(this);
         }
     }
 
@@ -142,7 +137,37 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
                 Log.i(TAG, "onError: errorCode = " + errorCode);
             }
         });
+    }
 
+    /**
+     * 语音识别（语音转文字）
+     *
+     * @param view view
+     */
+    public void asr(View view) {
+        mAsrUtil.start(new AsrUtil.OnAsrRecogListener() {
+            @Override
+            public void onAsrRecogResult(AsrRecogResult asrRecogResult) {
+                StringBuilder stringBuffer = new StringBuilder();
+                ArrayList<AsrRecogItem> asrRecogItemArrayList = asrRecogResult.getRecogItemList();
+                for (AsrRecogItem asrRecogItem : asrRecogItemArrayList) {
+                    String result = asrRecogItem.getRecogResult();
+                    Log.i(TAG, "onAsrRecogResult: " + result);
+                    stringBuffer.append(result).append("\n");
+                }
+                showDialog("识别结果", stringBuffer.toString());
+            }
+
+            @Override
+            public void onError(int errorCode) {
+                Log.i(TAG, "onError: " + errorCode);
+            }
+
+            @Override
+            public void onVolume(int volume) {
+                Log.i(TAG, "onVolume: " + volume);
+            }
+        });
     }
 
 
@@ -162,20 +187,5 @@ public class MainActivity extends AppCompatActivity implements TTSPlayerListener
     @Override
     public void onPlayerEventPlayerError(TTSCommonPlayer.PlayerEvent playerEvent, int errorCode) {
         Log.i(TAG, "onError " + playerEvent.name() + " code: " + errorCode);
-    }
-
-
-    /**
-     * 显示Dialog
-     *
-     * @param title   title
-     * @param message message
-     */
-    private void showDialog(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setPositiveButton("确认", null);
-        builder.create().show();
     }
 }

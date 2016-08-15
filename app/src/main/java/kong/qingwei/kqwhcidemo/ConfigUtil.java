@@ -24,7 +24,14 @@ public final class ConfigUtil {
     /**
      * 需要运行的灵云能力
      */
-    public static final String CAP_KEY = "tts.local.synth";
-    //    public static final String CAP_KEY = "tts.cloud.wangjing";
-    public static final String CAP_KEY_NUL = "nlu.cloud";
+    // 离线语音合成
+    public static final String CAP_KEY_TTS_LOCAL = "tts.local.synth";
+    // 云端语音合成
+    public static final String CAP_KEY_TTS_CLOUD = "tts.cloud.wangjing";
+    // 云端语义识别
+    public static final String CAP_KEY_NUL_CLOUD = "nlu.cloud";
+    // 云端自由说
+    public static final String CAP_KEY_ASR_CLOUD_FREETALK = "asr.cloud.freetalk";
+    // 云端语音识别+语义
+    public static final String CAP_KEY_ASR_CLOUD_DIALOG = "asr.cloud.dialog";
 }
